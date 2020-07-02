@@ -30,13 +30,17 @@ function LoginPage(props) {
     dispatch(loginUser(body))
       .then(response => {
         if(response.payload.loginSuccess){
-          props.history.push('/')
+          props.history.push('/home')
         } else {
           alert('Error')
         }
       })
     
     
+  }
+
+  const onLanding = () => {
+    props.history.push('/');
   }
 
   return(
@@ -51,7 +55,8 @@ function LoginPage(props) {
         <label>Password</label>
         <input type='password' value={Password} onChange={onPasswordHandler}/>
         <br />
-        <button type='submit'>Login</button>
+        <button type='submit'>Login</button><br />
+        <button onClick={onLanding}>Home</button>
       </form>
     </div>
   )

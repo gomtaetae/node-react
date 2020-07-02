@@ -10,6 +10,7 @@ import LandingPage from './components/views/LandingPage/LandingPage';
 import LoginPage from './components/views/LoginPage/LoginPage';
 import RegisterPage from './components/views/RegisterPage/RegisterPage';
 import Auth from './hoc/auth'
+import HomePage from './components/views/HomePage/HomePage';
 
 function App() {
   return (
@@ -25,8 +26,9 @@ function App() {
       */}
       <Switch>
         <Route exact path="/" component={Auth(LandingPage, null, true)} />
-        <Route path="/login" component={Auth(LoginPage, false)} />
-        <Route path="/register" component={Auth(RegisterPage, false)} />
+        <Route exact path="/login" component={Auth(LoginPage, false)} />
+        <Route exact path="/register" component={Auth(RegisterPage, false)} />
+        <Route exact path="/home" component={Auth(HomePage, true)} />
       </Switch>
     </div>
   </Router>
