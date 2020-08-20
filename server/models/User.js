@@ -40,10 +40,13 @@ const userSchema = mongoose.Schema({
   //유효기간
   tokenExp: {
     type: Number
-  }
+  },
+
 
 })
 
+
+//비밀번호를 암호화 시킨다 -> salt를 이용해서 비밀번호를 암호화 한다.
 userSchema.pre('save', function (next) {
 
   var user = this;
@@ -63,6 +66,8 @@ userSchema.pre('save', function (next) {
     next();
   }
 })
+
+
 
 userSchema.methods.comparePassword = function(plainPassword, cb){
   
