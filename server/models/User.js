@@ -42,6 +42,10 @@ const userSchema = mongoose.Schema({
     type: Number
   },
 
+  reaction: [{
+    name : {type: String},
+    count : {type : Number},
+  }]
 
 })
 

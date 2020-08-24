@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 //import  KaKaoLogin  from 'react-kakao-login';
 //import FacebookLogin from 'react-facebook-login';
 //import styled from 'styled-components'
+import EmojiReact from "react-emoji-react";
 
 function LandingPage(props) {
   
@@ -15,39 +16,34 @@ function LandingPage(props) {
   const onRegisterHandler = () => {
     props.history.push('/register')
   }
+  const [emojis, setEmojis] = useState([
+    {name: 'rage', count:2},
+    {name: 'blush', count:1},
+    {name: 100, count:2},
+    {name: 'grinning', count:3},
+    ]);
 
-  /*
-  const [Name, setName] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Url, setUrl] = useState("");
+  function emojiTest(name){
+    
+    let emoji = emojis.map(emojied => {
+      if (emojied.name === name){
+        console.log("이모지이등드드ㅡㄷ", emojied.name);
+        console.log("이모지지", name);
+        emojied.count += 1;
+      }
+      console.log("이모지드", emojied);
+      return emojied;
+    })
+    
+    setEmojis(emoji)
+  }
 
+  function emojiClick(name){
+    console.log("네에임", name);
+    let emoji = emojis.concat([{name, count:1}])
+    setEmojis(emoji)
+  }
   
-  const responseGoogle = (res) => {
-    console.log(res);
-    setName(res.profileObj.name);
-    setEmail(res.profileObj.email);
-    setUrl(res.profileObj.imageUrl);
-  }
-
-  const responseKaKao = (res) => {
-    setName(res.profile.properties.nickname);
-    setEmail(res.profile.kakao_account.email);
-    setUrl(res.profile.properties.profile_image);
-    console.log(res);
-    console.log(res.profile.properties.nickname);
-  }
-
-  const responseFacebook = (res) => {
-    console.log(res);
-    setName(res.name);
-    setEmail(res.email);
-    setUrl(res.picture.data.url);
-  }
-
-  const responseFail = (err) => {
-    console.error(err);
-  }
-*/
   
 
   return(
@@ -61,6 +57,13 @@ function LandingPage(props) {
       
         <button onClick={onLoginHandler}>로그인</button>
         <button onClick={onRegisterHandler}>회원가입</button>
+        <div>
+      <EmojiReact
+          reactions={emojis}
+          onReaction={emojiTest}
+          onEmojiClick={emojiClick}
+        />
+        </div>
         {/*
         <h1>Login with Google</h1>
         <h2>Welcome: {Name}</h2>

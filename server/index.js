@@ -44,6 +44,61 @@ app.post("/api/users/register", (req, res) => {
   });
 });
 
+//이모티콘 리엑션
+app.post("/api/users/reaction", auth, (req, res) => {
+  // console.log("바디",req.body);
+  //지금은 아이디로 불러오지만 나중에는 채팅으로 불러와야할꺼같음
+  console.log("아이디다다아",req.user._id);
+  User.findOne({_id: req.user._id}, (err, user) => {
+    //console.log("이모모모티콘", user.reaction.name);
+    //console.log("두번째애애", user);
+    if(err) return res.json({success:false, err})
+    if(user.reaction.name != req.body){//여기 수정
+      User.findOneAndUpdate(
+        {_id: req.user._id},
+        {$push: {reaction: req.body}},
+        {upsert: true, new : true})
+        .exec()
+        .then((doc)=>{         
+          console.log(doc);          //이게 이름 / auth에서 가져온 reaction
+          return res.status(200).json({user : doc.reaction})
+        })
+    }else{
+      return res.json({success:false, err})
+    }
+  })
+})
+
+app.get('/api/users/getReaction', auth ,(req, res)=>{
+  console.log(req.user)
+  User.find({_id : req.user._id }).exec()
+  .then((db)=>{
+    return res.status(200).json({
+      success : true,
+      user: db //event라는 이름으로 db 내용을 가져온다.
+    })
+  })
+  .catch((err)=>{
+    return res.json({ success: false, err });
+  })
+})
+
+// function getReaction(res) {
+//   console.log("이건 무슨 아디여");
+//   User.find({_id : user._id }).exec()
+//   .then((db)=>{
+    
+//     return res.status(200).json({
+//       success : true,
+//       user: db //event라는 이름으로 db 내용을 가져온다.
+//     })
+//   })
+//   .catch((err)=>{
+//     return res.json({ success: false, err });
+//   })
+// }
+
+
 app.post("/api/users/login", (req, res) => {
   //요청된 이메일을 데이터베이스에 있는지 찾는다. //findeOne => 몽고디비에서 지원하는 메소드
   User.findOne({ email: req.body.email }, (err, user) => {
@@ -90,6 +145,8 @@ app.get("/api/users/auth", auth, (req, res) => {
     lastname: req.user.lastname,
     role: req.user.role,
     image: req.user.image,
+
+    reaction: req.user.reaction
   });
 });
 
@@ -102,5 +159,7 @@ app.get("/api/users/logout", auth, (req, res) => {
     });
   });
 });
+
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

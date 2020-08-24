@@ -7,6 +7,8 @@ import  KaKaoLogin  from 'react-kakao-login';
 import FacebookLogin from 'react-facebook-login';
 import styled from 'styled-components'
 
+
+
 function RegisterPage(props) {
   const dispatch = useDispatch();
 
@@ -16,6 +18,8 @@ function RegisterPage(props) {
   const [ConfirmPassword, setConfirmPassword] = useState("")
   ///////////////////////////////////////////////
   const [Url, setUrl] = useState(null);
+  
+
   const responseGoogle = (res) => {
     
     //set하지말고 요청갈김
@@ -172,7 +176,6 @@ function RegisterPage(props) {
         
         <br/>
           <GoogleLogin
-            render={}
             clientId={'297011327835-5bmnie06q1t9abcmp2sbv1a5oomfsk6g.apps.googleusercontent.com'}
             buttonText="Google"
             onSuccess={result => responseGoogle(result)}
@@ -200,7 +203,9 @@ function RegisterPage(props) {
           fields="name,email,picture,id"
           callback={responseFacebook}
         />
+        
       </form>
+      
     </div>
   )
 }
